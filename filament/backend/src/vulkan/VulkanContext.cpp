@@ -42,7 +42,12 @@ VkImageLayout VulkanAttachment::getLayout() const {
     return texture ? texture->getVkLayout(layer, level) : VK_IMAGE_LAYOUT_UNDEFINED;
 }
 
-VkImageView VulkanAttachment::getImageView(VkImageAspectFlags aspect) {
+VkExtent2D VulkanAttachment::getExtent2D() const {
+    assert_invariant(texture);
+    return { texture->width >> level, texture->height >> level };
+}
+
+VkImageView VulkanAttachment::getImageView(VkImageAspectFlags aspect) const {
     assert_invariant(texture);
     return texture->getAttachmentView(level, layer, aspect);
 }
